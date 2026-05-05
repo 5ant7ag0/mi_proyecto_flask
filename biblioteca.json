@@ -1,0 +1,48 @@
+{
+    "libros": [
+        {
+            "id": 1,
+            "titulo": "Cien A\u00f1os de Soledad",
+            "autor": "Gabriel Garc\u00eda M\u00e1rquez",
+            "a\u00f1o": 1967,
+            "editorial": "Sudamericana",
+            "disponible": false
+        },
+        {
+            "id": 2,
+            "titulo": "300",
+            "autor": "Anonimo",
+            "a\u00f1o": null,
+            "editorial": null,
+            "disponible": true
+        }
+    ],
+    "usuarios": [
+        {
+            "id": 1,
+            "nombre": "Beatriz",
+            "correo": "admin@biblioteca.com",
+            "empleado_id": "EMP-001"
+        },
+        {
+            "id": 2,
+            "nombre": "Santiago",
+            "correo": "santiago@mail.com",
+            "libros_prestados": [
+                "Cien A\u00f1os de Soledad"
+            ]
+        },
+        {
+            "id": 3,
+            "nombre": "Ana Garcia",
+            "correo": "ana@mail.com",
+            "libros_prestados": []
+        },
+        {
+            "id": 4,
+            "nombre": "Pablo",
+            "correo": "pablo@gmail.com",
+            "libros_prestados": []
+        }
+    ]
+}
