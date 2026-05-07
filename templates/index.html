@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca ITQ - Gestión MacBook M4</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --bg: #f4f7f6;
+            --text: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        /* Diseño en Rejilla */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        /* Formularios */
+        form {
+            margin-bottom: 20px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn-reg {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-reg:hover {
+            background-color: #218838;
+        }
+
+        .btn-loan {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-loan:hover {
+            background-color: #0069d9;
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            color: #666;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        /* Estados y Badges */
+        .badge {
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .disponible {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .prestado {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-return {
+            color: var(--danger);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--danger);
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .btn-return:hover {
+            background-color: var(--danger);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📚 Sistema de Biblioteca (SQL Server + Docker)</h1>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Registrar Nuevo Usuario</h2>
+                <form action="/registrar_usuario" method="POST">
+                    <input type="text" name="cedula" placeholder="Número de Cédula" required>
+                    <input type="text" name="nombre" placeholder="Nombres" required>
+                    <input type="text" name="apellido" placeholder="Apellidos" required>
+                    <input type="email" name="correo" placeholder="Correo Electrónico" required>
+                    <button type="submit" class="btn-reg">Guardar Usuario</button>
+                </form>
+
+                <h2>Usuarios Registrados</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cédula</th>
+                            <th>Nombre Completo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in usuarios %}
+                        <tr>
+                            <td>{{ u.cedula }}</td>
+                            <td>{{ u.nombre }} {{ u.apellido }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Añadir Nuevo Libro</h2>
+                <form action="/registrar_libro" method="POST">
+                    <input type="text" name="titulo" placeholder="Título del Libro" required>
+                    <input type="text" name="autor" placeholder="Autor" required>
+                    <input type="text" name="genero" placeholder="Género" required>
+                    <button type="submit" class="btn-reg">Añadir al Inventario</button>
+                </form>
+
+                <h2>Inventario de Libros</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for l in inventario %}
+                        <tr>
+                            <td>{{ l.titulo }}</td>
+                            <td>
+                                <span class="badge {{ 'disponible' if l.estado == 'Disponible' else 'prestado' }}">
+                                    {{ l.estado }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Realizar Nuevo Préstamo</h2>
+                <form action="/realizar_prestamo" method="POST">
+                    <label>Seleccionar Usuario:</label>
+                    <select name="usuario_cedula" required>
+                        <option value="">-- Seleccione un usuario --</option>
+                        {% for u in usuarios %}
+                        <option value="{{ u.cedula }}">{{ u.nombre }} {{ u.apellido }} ({{ u.cedula }})</option>
+                        {% endfor %}
+                    </select>
+
+                    <label>Seleccionar Libro Disponible:</label>
+                    <select name="libro_id" required>
+                        <option value="">-- Seleccione un libro --</option>
+                        {% for l in libros %}
+                        <option value="{{ l.id }}">{{ l.titulo }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn-loan">Generar Préstamo</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Préstamos Activos (Sin Devolver)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Libro</th>
+                            <th>Usuario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in prestamos %}
+                        <tr>
+                            <td><strong>{{ p.libro.titulo }}</strong></td>
+                            <td>{{ p.usuario.nombre }}</td>
+                            <td>
+                                <a href="/devolver_libro/{{ p.id }}" class="btn-return">Devolver</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: #999;">No hay préstamos pendientes.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
